@@ -1,14 +1,5 @@
-def getTotalDistance():
-    with open("files/input.txt") as inputFile:
-        lines = inputFile.readlines()
-        leftArray = []
-        rightArray = []
-        sum = 0
-        for line in lines:
-            split = line.split(' ')
-            leftArray.append(int(split[0]))
-            rightArray.append(int(split[3][:-1]))
-
+def solveFirstPart(leftArray, rightArray):
+        finalSum = 0
         sortAscending(leftArray)
         sortAscending(rightArray)
 
@@ -16,9 +7,9 @@ def getTotalDistance():
         print(rightArray)
 
         for x in range(len(leftArray)):
-            sum += abs(leftArray[x] - rightArray[x])
+            finalSum += abs(leftArray[x] - rightArray[x])
 
-        return sum
+        return finalSum
 
 def sortAscending(array):
     for x in range(len(array)):
@@ -28,7 +19,29 @@ def sortAscending(array):
                 array[z] = array[z+1]
                 array[z+1] = y
 
+def solveSecondPart(leftArray, rightArray):
+    arrLength = len(leftArray)
+    finalSum = 0
+
+    for x in range(arrLength):
+        occurrences = 0
+        for y in range (arrLength):
+            if leftArray[x] == rightArray[y]:
+                occurrences += 1
+        finalSum += leftArray[x] * occurrences
+
+    return finalSum
+
 if __name__ == '__main__':
 
-    print(getTotalDistance())
+    with open("files/input.txt") as inputFile:
+        lines = inputFile.readlines()
+        leftArray = []
+        rightArray = []
+        for line in lines:
+            split = line.split(' ')
+            leftArray.append(int(split[0]))
+            rightArray.append(int(split[3][:-1]))
 
+        print(solveFirstPart(leftArray, rightArray))
+        print(solveSecondPart(leftArray, rightArray))
